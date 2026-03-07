@@ -1,0 +1,29 @@
+
+.shadow-torch-red {
+  --tw-shadow-color: #fe125c;
+  --tw-shadow: var(--tw-shadow-colored);
+}
+
+.shadow-2xl {
+  --tw-shadow: 0 25px 50px -12px rgba(0, 0, 0, .25) !important;
+  --tw-shadow-colored: 0 25px 50px -12px var(--tw-shadow-color) !important;
+}
+
+.to-torch-red {
+  --tw-gradient-to: #fe125c var(--tw-gradient-to-position) !important;
+}
+
+.gradiant {
+  --tw-gradient-to: #fe125c var(--tw-gradient-to-position) !important;
+}
+
+.via-seance {
+  --tw-gradient-to: rgba(132, 43, 164, 0) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), #842ba4 var(--tw-gradient-via-position), var(--tw-gradient-to) !important;
+}
+
+.from-seance {
+  --tw-gradient-from: #842ba4 var(--tw-gradient-from-position);
+  --tw-gradient-to: rgba(132, 43, 164, 0) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}

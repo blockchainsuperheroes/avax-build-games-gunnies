@@ -1,0 +1,7 @@
+.badge-title {
+    background: linear-gradient(106.49deg, #D6C1FF 8.98%, #F3ECFF 27.45%, #FFFFFF 46.28%, #9AD2FF 81.41%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-fill-color: transparent;
+}

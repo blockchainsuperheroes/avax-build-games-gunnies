@@ -1,0 +1,13 @@
+select = ["ALL"]
+ignore = ["B008", "D", "ARG001", "N815", "ARG002", "A003", "PTH", "UP", "ANN", "DTZ", "FBT001", "E722", "S110", "DJ008", "BLE001", "ERA001", "C901", "PLR2004", "S105", "RUF012", "DJ001"]
+line-length = 250
+
+[pylint]
+max-args = 10
+max-branches = 20
+max-returns = 10
+max-statements = 80
+allow-magic-value-types = ["int"]
+
+[flake8-builtins]
+builtins-ignorelist = ["id", "type"]

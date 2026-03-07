@@ -1,0 +1,18 @@
+export const ROUTES = {
+  QUESTS: '/quests',
+  EARLY_ACCESS: '/early-access',
+  LINEUP_AND_MORE: '/lineup-and-more',
+  ABOUT: '/',
+  LEADERBOARD: '/leaderboard',
+  SHOP: '/shop',
+  CART: '/cart',
+  PURCHASE_HISTORY: '/purchase-history',
+  PURCHASE_DETAIL: '/purchase-history/[id]',
+  DOWNLOAD: '/download',
+  GET_STARTED: '/get-started',
+  CURRENT_EVENT: '/current-event',
+  PROFILE: '/profile',
+  BRAND_KIT: '/brand-kit',
+  NFT_CARDS: '/nft-cards',
+  COLLECTIBLES: '/collectibles',
+};

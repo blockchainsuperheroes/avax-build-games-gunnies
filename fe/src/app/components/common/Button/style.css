@@ -1,0 +1,72 @@
+.btn:hover {
+  background: linear-gradient(#000, #000) padding-box,
+    linear-gradient(
+        90deg,
+        #7e0b50 0%,
+        #de00ff 8.5%,
+        #0085ff 51.5%,
+        #ff0099 92.12%,
+        #630a3f 100%
+      )
+      border-box;
+}
+
+.btn-view-active {
+  background: linear-gradient(#000, #000) padding-box,
+    linear-gradient(
+        90deg,
+        #7e0b50 0%,
+        #de00ff 8.5%,
+        #0085ff 51.5%,
+        #ff0099 92.12%,
+        #630a3f 100%
+      )
+      border-box !important;
+  @apply rounded-[0.625rem] border bg-black border-transparent;
+}
+.btn-normal {
+  @apply rounded-[0.625rem] border text-white font-sora text-[22px] leading-[26px] font-normal border-white bg-violet hover:bg-violet-600;
+}
+
+.btn-primary {
+  @apply rounded-md text-center hover:bg-primary-300 transition hover:scale-[0.95] hover:border-primary-400 table !bg-primary text-black shadow-xl shadow-primary/40 font-bold py-1.5 border-2 border-solid border-primary text-[14px] px-2;
+}
+
+.btn-secondary {
+  @apply rounded-md text-center hover:bg-secondary-400 transition hover:scale-[0.95] hover:border-secondary-400 transition shadow-xl shadow-secondary/40 table bg-secondary text-white font-bold py-1.5 border-2 border-solid border-secondary text-[14px] px-2;
+}
+.btn-metamask {
+  @apply rounded-md text-center table  bg-orange-500 transition hover:scale-[0.95] text-white font-bold py-1.5 border-2 border-solid border-orange-500 text-white text-[14px] px-2;
+}
+
+.btn-ghost {
+  @apply rounded-md text-center hover:bg-primary/10 transition hover:scale-[0.95] transition shadow-xl shadow-primary/10 table border-2 border-solid border-primary text-primary  font-bold py-1.5 text-[14px] px-4;
+}
+
+.btn-metamask-ghost {
+  @apply rounded-md text-center table  bg-orange-500/10 transition hover:scale-[0.95] text-white font-bold py-1.5 border-2 border-solid border-orange-500 text-white text-[14px] px-2;
+}
+
+.btn-pera {
+  @apply rounded-md text-center table  text-yellow-500 transition hover:scale-[0.95] font-bold py-1.5 border-2 border-solid border-yellow-500 text-yellow-500 text-[14px] px-2;
+}
+.btn-loading {
+  @apply rounded-[0.625rem] border border-white bg-black;
+}
+.btn-outline {
+  @apply rounded-[10px] border border-white hover:border-violet-400 text-white;
+}
+.btn-disabled {
+  opacity: 0.6;
+  cursor: not-allowed !important;
+  @apply hover:!scale-[1]
+}
+
+.slick-prev {
+  left: 3% !important;
+  z-index: 1;
+}
+.slick-next {
+  right: 3% !important;
+  z-index: 1;
+}

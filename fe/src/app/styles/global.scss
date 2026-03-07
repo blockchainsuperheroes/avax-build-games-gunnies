@@ -1,0 +1,116 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import './mixins.scss';
+
+.line-clamp-2 {
+  @include line-clamp(2);
+}
+
+.line-clamp-4 {
+  @include line-clamp(4);
+}
+
+.line-clamp-6 {
+  @include line-clamp(6);
+}
+
+.design-container {
+  backface-visibility: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+.shopIcon {
+  transition: filter 0.3s ease;
+}
+
+.shopIconHover:hover img {
+  filter: brightness(0) saturate(100%) invert(58%) sepia(14%) saturate(4232%) hue-rotate(345deg) brightness(101%) contrast(104%);
+}
+
+@layer components {
+  .input,
+  .input[type="text"],
+  .input[type="password"]  {
+    @apply w-full text-[14px] bg-transparent border border-solid border-white p-4 h-[64px] rounded-[10px] font-sora text-white placeholder-white focus:outline-none focus:ring-0 focus:border-violet-400;
+
+  }
+
+  .input-small {
+    @apply p-4;
+  }
+
+  input:-webkit-autofill,
+  input:-webkit-autofill:focus {
+      transition: background-color 600000s 0s, color 600000s 0s;
+  }
+  
+  input[data-autocompleted] {
+      background-color: transparent !important;
+  }
+
+  button[type="submit"],
+  input[type="submit"],
+  .submit {
+    @apply rounded-[10px] font-sora text-[24px] leading-[27px] tracking-[0.05em] font-normal p-0 border-0 text-white border-transparent bg-violet hover:bg-violet-600 cursor-pointer;
+  }
+
+  .input-small {
+    @extend .input;
+
+    @apply p-2 px-2;
+  }
+
+  .link {
+    @apply text-primary underline;
+  }
+
+  .btn-shadow-1 {
+    box-shadow: 0px 0px 20px 0px #EFDCFF;
+  }
+
+  .border-sign-up-and-dive-in {
+    position: relative;
+    border-radius: 20px;
+  }
+
+  .border-sign-up-and-dive-in::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 20px;
+    padding: 1px;
+    background: conic-gradient(from 180deg at 50% 50%, #FF98E2 0deg, #FFC876 35.77deg, #79FFF7 153.75deg, #9F53FF 258.75deg, #FF98E2 360deg);
+    backdrop-filter: blur(20px);
+    mask:
+      linear-gradient(#000 0 0) content-box, 
+      linear-gradient(#000 0 0);
+    mask-composite: exclude; 
+  }
+
+  .btn-magic {
+    @apply h-[58px] !font-chakra !font-medium !text-[20px] !leading-[58px] cursor-pointer text-center rounded-[8px] bg-[linear-gradient(90deg,rgba(0,101,253,1)_0%,rgba(188,0,254,1)_100%)] hover:opacity-80 hover:bg-[linear-gradient(270deg,rgba(0,101,253,1)_0%,rgba(188,0,254,1)_100%)]
+  }
+
+  .color-border-bg {
+    position: relative;
+    border-radius: 20px;
+    padding: 1px;
+  }
+
+  .color-border-bg::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 20px;
+    padding: 1px;
+    background: linear-gradient(108.35deg, #F18BAB 2.59%, #7B82F3 73.6%);
+    backdrop-filter: blur(10px);
+    mask:
+      linear-gradient(#000 0 0) content-box, 
+      linear-gradient(#000 0 0);
+    mask-composite: exclude; 
+  }
+  
+}
