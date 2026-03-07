@@ -1,43 +1,72 @@
 # Gunnies Smart Contracts — Avalanche C-Chain
 
-Solidity smart contracts for the Gunnies game ecosystem, targeting Avalanche C-Chain deployment.
+Solidity smart contracts for the Gunnies FPS ecosystem. All contracts will be deployed on **Avalanche C-Chain (43114)** and tested on **Fuji Testnet (43113)**.
 
 ## Contracts
 
-| Contract | Description |
-|----------|-------------|
-| **GCN721Main.sol** | ERC-721 NFT collection for Gunnies characters |
-| **GunniesKiller.sol** | On-chain kill count tracking and verification |
-| **GunniesSBT.sol** | Soulbound achievement tokens (non-transferable) |
-| **Coin.sol** | Stars — in-game reward token |
-| **Karrot.sol** | Karrots — premium currency token |
-| **GCNCraftingRouter.sol** | Item crafting and combination logic |
-| **GCNShards.sol** | Crafting material shards |
-| **Pumpkin.sol** | Seasonal event token |
-
-## Target Networks
-
-| Network | Chain ID | RPC |
-|---------|----------|-----|
-| Avalanche C-Chain | 43114 | `https://api.avax.network/ext/bc/C/rpc` |
-| Fuji Testnet | 43113 | `https://api.avax-test.network/ext/bc/C/rpc` |
+| Contract | Description | Status |
+|---|---|---|
+| **GCN721Main.sol** | Main Gunnies Collectible NFTs (ERC-721). 7 characters × 3 rarity tiers. | To be deployed |
+| **GCNShards.sol** | Card shards used in crafting (ERC-1155). Combine shards to mint full cards. | To be deployed |
+| **GCNCraftingRouter.sol** | Crafting system — burn shards + base cards to mint higher-rarity cards. | To be deployed |
+| **GunniesKiller.sol** | On-chain kill tracking. Stores per-player kill counts synced from game server. | To be deployed |
+| **GunniesSBT.sol** | Soulbound achievement tokens. Non-transferable proof of in-game accomplishments. | To be deployed |
+| **Karrot.sol** | ERC-20 reward token earned from lootboxes and gameplay. | To be deployed |
+| **Coin.sol** | In-game currency bridge token (ERC-20). | To be deployed |
+| **Pumpkin.sol** | Seasonal event token (ERC-20). | To be deployed |
 
 ## Deployment
 
-All contracts will be deployed on Avalanche C-Chain. Addresses TBD.
+### Using Foundry (Recommended)
 
 ```bash
-# Deploy with Foundry
-forge create --rpc-url https://api.avax-test.network/ext/bc/C/rpc \
-  --private-key $DEPLOYER_KEY \
-  contracts/GunniesKiller.sol:GunniesKiller
+# Install Foundry
+curl -L https://foundry.paradigm.xyz | bash
+foundryup
 
-# Deploy with Hardhat
-npx hardhat run scripts/deploy.js --network avalanche
+# Compile
+forge build
+
+# Deploy to Fuji Testnet
+forge create --rpc-url https://api.avax-test.network/ext/bc/C/rpc \
+  --private-key $PRIVATE_KEY \
+  src/GCN721Main.sol:GCN721Main
+
+# Deploy to Avalanche Mainnet
+forge create --rpc-url https://api.avax.network/ext/bc/C/rpc \
+  --private-key $PRIVATE_KEY \
+  src/GCN721Main.sol:GCN721Main
 ```
 
-## Key Design Decisions
-- **Kill Count On-Chain:** GunniesKiller.sol stores batched kill counts, enabling trustless leaderboards
-- **Soulbound Tokens:** Achievement badges are non-transferable (SBT standard)
-- **ERC-721 for Characters:** Full NFT ownership of game characters with on-chain metadata
-- **Token Economy:** Dual token model (Stars for engagement, Karrots for premium)
+### Using Hardhat
+
+```bash
+npx hardhat compile
+npx hardhat deploy --network avalanche
+npx hardhat deploy --network fuji
+```
+
+## Contract Addresses (TBD)
+
+All contracts will be redeployed fresh on Avalanche. Addresses will be updated here after deployment.
+
+| Contract | Fuji (Testnet) | Mainnet |
+|---|---|---|
+| GCN721Main | TBD | TBD |
+| GCNShards | TBD | TBD |
+| GCNCraftingRouter | TBD | TBD |
+| GunniesKiller | TBD | TBD |
+| GunniesSBT | TBD | TBD |
+| Karrot | TBD | TBD |
+| Coin | TBD | TBD |
+| Pumpkin | TBD | TBD |
+
+## Verification
+
+After deployment, verify on SnowTrace:
+
+```bash
+forge verify-contract <ADDRESS> src/GCN721Main.sol:GCN721Main \
+  --chain-id 43114 \
+  --etherscan-api-key $SNOWTRACE_API_KEY
+```

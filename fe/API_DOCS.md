@@ -2,7 +2,7 @@
 
 ## External APIs
 
-### Pentagon Login Backend
+### Auth Backend
 Base URL: `NEXT_PUBLIC_LOGIN_API`
 
 #### POST /user/login
@@ -127,7 +127,7 @@ Requests to `/api/{PROXY_PATH}/*` are proxied to the login backend to handle COR
 │                  │                                              │
 │                  ▼                                              │
 │  ┌──────────────────────────────────────────────────────┐      │
-│  │              Pentagon Login Backend                   │      │
+│  │              Auth Backend                   │      │
 │  │              NEXT_PUBLIC_LOGIN_API                    │      │
 │  └────────────────────────┬─────────────────────────────┘      │
 │                           │                                     │

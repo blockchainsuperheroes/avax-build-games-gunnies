@@ -1,34 +1,55 @@
-# Game Scripts — Blockchain Sync
+# Game Scripts — Blockchain Utilities
 
-Scripts that bridge game server data to Avalanche C-Chain smart contracts.
+Standalone Python scripts extracted from the backend for blockchain interaction with the Avalanche C-Chain.
 
-## Scripts
+## Files
 
 | Script | Description |
-|--------|-------------|
-| **blockchain_tasks.py** | Celery tasks for batching and syncing kill counts to chain |
-| **blockchain_utils.py** | Web3 utilities for contract interaction on Avalanche |
+|---|---|
+| **blockchain_utils.py** | Chain configuration, Web3 connection helpers, kill-count utilities, wallet signature verification |
+| **blockchain_tasks.py** | Celery task definitions for async on-chain operations (reward distribution, asset grants) |
 
-## How Kill Count Sync Works
+## Chain Configuration
 
-1. Game server records player kills in real-time (backend DB)
-2. Periodically (configurable interval), `blockchain_tasks.py` batches unsync'd kills
-3. Batch is submitted to `GunniesKiller.sol` on Avalanche C-Chain
-4. Transaction confirmed → kills permanently recorded on-chain
-5. Leaderboard queries read from on-chain data for trustless rankings
+The `get_chain_details()` function maps chain IDs to RPC endpoints:
 
-## Configuration
+- **Avalanche Mainnet (43114)**: `https://api.avax.network/ext/bc/C/rpc`
+- **Avalanche Fuji (43113)**: `https://api.avax-test.network/ext/bc/C/rpc`
 
-Set these environment variables:
+## Kill-Count Sync Flow
+
 ```
-AVAX_RPC_URL=https://api.avax.network/ext/bc/C/rpc
-AVAX_CHAIN_ID=43114
-DEPLOYER_PRIVATE_KEY=<your-key>
-GUNNIES_KILLER_CONTRACT=<deployed-address>
+Game Match Ends
+      │
+      ▼
+Backend receives kill report
+      │
+      ▼
+OnChainKillTxData created (from_user, to_user, match_id, count)
+      │
+      ▼
+Celery task picks up pending sync
+      │
+      ▼
+Web3.py submits tx to GunniesKiller contract on Avalanche
+      │
+      ▼
+OnChainKillTxLog updated with tx_hash and status
+      │
+      ▼
+OnChainKillSummaryLog aggregates total kills per user
 ```
 
 ## Usage
+
+These scripts require the Django environment and dependencies from the backend:
+
 ```bash
-pip install web3 celery
-python blockchain_tasks.py
+cd ../be
+source venv/bin/activate
+pip install -r requirements.txt
+
+# Set required env vars
+export NODE_RPC_URL_AVAX=https://api.avax.network/ext/bc/C/rpc
+export NODE_RPC_URL_AVAX_FUJI=https://api.avax-test.network/ext/bc/C/rpc
 ```
