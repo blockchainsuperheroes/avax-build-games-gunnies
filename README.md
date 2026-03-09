@@ -8,8 +8,7 @@
 
 | | |
 |---|---|
-| **Website** | [gunnies.io](https://gunnies.io) |
-| **AVAX Quests Page** | [gunnies.io/avax](https://gunnies.io/avax) |
+| **Website** | [gunnies.io/avax](https://gunnies.io/avax) |
 | **Steam** | [Gunnies on Steam](https://store.steampowered.com/app/3323030/Gunnies/) |
 | **Epic Games** | [Gunnies on Epic](https://store.epicgames.com/en-US/p/gunnies-491615) |
 | **Chain** | Avalanche C-Chain (43114) |
@@ -243,8 +242,7 @@ See individual `README.md` files in `/fe`, `/be`, and `/contracts` for detailed 
 
 - **AVAX Build Games**: [build.avax.network/build-games](https://build.avax.network/build-games)
 - **Avalanche Docs**: [docs.avax.network](https://docs.avax.network)
-- **Gunnies Website**: [gunnies.io](https://gunnies.io)
-- **Gunnies AVAX Page**: [gunnies.io/avax](https://gunnies.io/avax)
+- **Gunnies AVAX**: [gunnies.io/avax](https://gunnies.io/avax)
 - **Discord**: [discord.com/invite/pentagongamesxp](https://discord.com/invite/pentagongamesxp)
 - **Twitter/X**: [@GunniesXP](https://x.com/GunniesXP)
 
