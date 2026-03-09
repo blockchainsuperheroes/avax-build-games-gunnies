@@ -4,15 +4,106 @@
   <img src="fe/public/avax-logo.svg" width="80" alt="Avalanche" />
 </p>
 
-> **Gunnies** is a free-to-play, cartoon-style first-person shooter with on-chain lootboxes, kill-count tracking, and NFT collectibles — now building on **Avalanche**.
+> **Gunnies** is a free-to-play, cartoon-style first-person shooter with on-chain lootboxes, kill-count tracking, and NFT collectibles — now live on **Avalanche**.
 
 | | |
 |---|---|
 | **Website** | [gunnies.io](https://gunnies.io) |
+| **AVAX Quests Page** | [gunnies.io/avax](https://gunnies.io/avax) |
 | **Steam** | [Gunnies on Steam](https://store.steampowered.com/app/3323030/Gunnies/) |
 | **Epic Games** | [Gunnies on Epic](https://store.epicgames.com/en-US/p/gunnies-491615) |
-| **Chain** | Avalanche C-Chain (Mainnet 43114 / Fuji Testnet 43113) |
+| **Chain** | Avalanche C-Chain (43114) |
 | **AVAX Games Program** | [build.avax.network/build-games](https://build.avax.network/build-games) |
+
+---
+
+## ✅ Deployed Contracts (Avalanche C-Chain Mainnet)
+
+All 4 contracts are **deployed and verified** on Snowtrace:
+
+| Contract | Address | Snowtrace | What It Does |
+|---|---|---|---|
+| **KhaosReward** | `0x9FF2D54510AB66Dd82634eAA1Afa1e57C3E1882C` | [Verified ✅](https://snowtrace.io/address/0x9FF2D54510AB66Dd82634eAA1Afa1e57C3E1882C#code) | **Lootbox opening** — users call `claimReward()` with just gas to open daily chests. Emits `RewardEarned` events that the backend reads to distribute rewards (stars, coins, karrots). |
+| **GunniesKiller** | `0x45eFd10b36CC2fAC20852e47371BeBb36FB47C1c` | [Verified ✅](https://snowtrace.io/address/0x45eFd10b36CC2fAC20852e47371BeBb36FB47C1c#code) | **Kill tracking** — stores per-player kill counts synced from the FPS game server via cron jobs. Verifiable, tamper-proof performance record on-chain. |
+| **Kaboom_Pass** | `0x8c5D7BC84d0ab7cc7e32A9848804824d079f2C0f` | [Verified ✅](https://snowtrace.io/address/0x8c5D7BC84d0ab7cc7e32A9848804824d079f2C0f#code) | **Premium pass NFT** — holders get 2x daily loot box openings + access to enhanced reward tiers. |
+| **Kaboom_Distributor** | `0x051654bF2Ba4eB8bf866e1196B4a23970d97Db15` | [Verified ✅](https://snowtrace.io/address/0x051654bF2Ba4eB8bf866e1196B4a23970d97Db15#code) | **Pass minting** — users pay AVAX to `mint()` and receive a Kaboom_Pass NFT. Supports native AVAX and ERC-20 payment. |
+
+---
+
+## 🎮 How It Works (End-to-End Flow)
+
+### 1. Play the Game
+Gunnies is a fast-paced FPS on **Steam** and **Epic Games Store**. Players battle in cartoon-style arenas.
+
+### 2. Kills Sync to Avalanche
+Every kill is tracked and periodically synced to the **GunniesKiller** contract:
+- Game client reports kills to Django backend
+- `gunnies-pg-crons` batches kills per player
+- Cron job submits batched kill counts on-chain every 15 minutes
+- Players can verify their kill history on Snowtrace
+
+### 3. Open Daily Loot Boxes
+Players visit [gunnies.io/avax](https://gunnies.io/avax), connect wallet, and open chests:
+- Each chest open is an on-chain `claimReward()` transaction (just gas, no payment)
+- 5 free chests per day for all users
+- Backend reads the `RewardEarned` event and distributes rewards
+
+### 4. Rewards
+Each chest drops a mix of:
+- **Stars** (5-40) — leaderboard ranking
+- **Coins** (10-40) — in-game currency for cosmetics and weapons
+- **Karrots** (10-100) — premium currency for legendary loot boxes
+
+### 5. Premium: Kaboom Pass
+Players can buy a **Kaboom Pass NFT** with AVAX:
+- Minted via the Kaboom_Distributor contract
+- Pass holders get **2x daily chests** (10 instead of 5)
+- Access to enhanced reward tiers
+- Valid for one year
+
+```
+┌──────────────┐     ┌──────────────┐     ┌──────────────────┐
+│  FPS Game    │────▶│  Backend     │────▶│  GunniesKiller   │
+│  (Steam/Epic)│     │  (Django)    │     │  (kill tracking) │
+└──────────────┘     └──────┬───────┘     └──────────────────┘
+                            │
+                            ▼
+┌──────────────┐     ┌──────────────┐     ┌──────────────────┐
+│  Player      │────▶│  KhaosReward │────▶│  Backend reads   │
+│  opens chest │     │  (on-chain)  │     │  event, gives    │
+│  on website  │     │              │     │  Stars/Coins/    │
+└──────────────┘     └──────────────┘     │  Karrots         │
+                                          └──────────────────┘
+┌──────────────┐     ┌──────────────┐     ┌──────────────────┐
+│  Player buys │────▶│  Kaboom_     │────▶│  Kaboom_Pass NFT │
+│  pass (AVAX) │     │  Distributor │     │  → 2x chests/day │
+└──────────────┘     └──────────────┘     └──────────────────┘
+```
+
+---
+
+## 📂 Repository Structure
+
+```
+├── fe/                  → Next.js frontend (AVAX quests page, wallet, minting)
+│   ├── src/app/avax/    → gunnies.io/avax — the AVAX-exclusive quests page
+│   ├── src/hooks/       → useClaimAvax, useMintAvax, useKillBalance
+│   ├── src/abi/         → Contract ABIs
+│   └── README.md
+│
+├── be/                  → Django backend (auth, game data, rewards, on-chain sync)
+│   ├── common/          → Core app (models, views, tasks, chain config)
+│   ├── gunnies-crons/   → Kaboom Pass sync, LootLocker rewards, currency distribution
+│   ├── gunnies-pg-crons/→ On-chain kill sync, currency TX, airdrops (runs every 10-15 min)
+│   └── README.md
+│
+├── contracts/           → 11 Solidity contracts (4 deployed, 7 planned)
+│   └── README.md        → Full deployment details + Snowtrace links
+│
+├── game-scripts/        → Blockchain utility scripts (kill sync helpers)
+│
+└── README.md            → You are here
+```
 
 ---
 
@@ -39,98 +130,50 @@
 │  │ User Mgmt  │ │ Integration  │ │ (Celery tasks)        │ │
 │  └────────────┘ └──────────────┘ └──────────┬────────────┘ │
 │                                              │              │
-│  ┌────────────┐ ┌──────────────┐             │              │
-│  │ Stripe     │ │ Chest/Reward │             │              │
-│  │ Payments   │ │ Engine       │             │              │
-│  └────────────┘ └──────────────┘             │              │
+│  ┌──────────────────┐ ┌─────────────────┐    │              │
+│  │ gunnies-crons    │ │ gunnies-pg-crons│    │              │
+│  │ (Kaboom sync,    │ │ (kill TX, coins,│    │              │
+│  │  LootLocker)     │ │  karrots, GCN)  │    │              │
+│  └──────────────────┘ └─────────────────┘    │              │
 └──────────────────────────────────────────────┼──────────────┘
                                                │
          ┌─────────────────────────────────────┼──────┐
-         │          AVALANCHE C-CHAIN          │      │
+         │          AVALANCHE C-CHAIN (43114)  │      │
          │                                     ▼      │
-         │  ┌────────────┐  ┌──────────────────────┐  │
-         │  │ GCN NFTs   │  │ GunniesKiller.sol    │  │
-         │  │ (ERC-721)  │  │ (kill-count SBT)     │  │
-         │  └────────────┘  └──────────────────────┘  │
+         │  ┌─────────────────┐ ┌─────────────────┐   │
+         │  │ KhaosReward     │ │ GunniesKiller   │   │
+         │  │ (lootbox claim) │ │ (kill tracking) │   │
+         │  └─────────────────┘ └─────────────────┘   │
          │                                            │
-         │  ┌────────────┐  ┌──────────────────────┐  │
-         │  │ GCN Shards │  │ Karrot / Coin        │  │
-         │  │ (ERC-1155) │  │ (ERC-20 rewards)     │  │
-         │  └────────────┘  └──────────────────────┘  │
-         │                                            │
-         │  ┌────────────┐  ┌──────────────────────┐  │
-         │  │ Crafting   │  │ GunniesSBT           │  │
-         │  │ Router     │  │ (Soulbound Tokens)   │  │
-         │  └────────────┘  └──────────────────────┘  │
+         │  ┌─────────────────┐ ┌─────────────────┐   │
+         │  │ Kaboom_Pass     │ │ Kaboom_         │   │
+         │  │ (premium NFT)   │ │ Distributor     │   │
+         │  └─────────────────┘ │ (mint w/ AVAX)  │   │
+         │                      └─────────────────┘   │
          └────────────────────────────────────────────┘
                               │
                               ▼
 ┌─────────────────────────────────────────────────────────────┐
-│                 FRONTEND (Next.js + RainbowKit)             │
+│             FRONTEND (Next.js + RainbowKit + wagmi)         │
 │                                                             │
 │   ┌──────────┐  ┌──────────┐  ┌────────────────────────┐   │
-│   │ Quests / │  │ NFT      │  │ Leaderboard /          │   │
-│   │ Lootbox  │  │ Collect. │  │ Profile                │   │
+│   │ /avax    │  │ NFT      │  │ Leaderboard /          │   │
+│   │ Quests   │  │ Collect. │  │ Profile                │   │
 │   └──────────┘  └──────────┘  └────────────────────────┘   │
 └─────────────────────────────────────────────────────────────┘
 ```
 
 ---
 
-## 🎮 How Gunnies Works
-
-### The Game
-Gunnies is a fast-paced FPS available on **Steam** and **Epic Games Store**. Players battle in cartoon-style arenas, earning in-game currency and rewards.
-
-### Lootbox System
-1. Players earn **chests** by playing matches and completing missions
-2. Chests are opened on the **Avalanche C-Chain** — each open is an on-chain transaction
-3. Rewards range from in-game stars and coins to **Karrot tokens** (ERC-20) and rare NFT drops
-4. Premium users (NFT holders) get access to enhanced loot tables
-
-### Kill-Count Sync to Blockchain
-Every kill in Gunnies is tracked and periodically synced to the **GunniesKiller.sol** contract on Avalanche:
-
-1. The game client reports kills to the Django backend
-2. A Celery worker batches kill data per user per match
-3. The `OnChainKillTxData` and `OnChainKillSummaryLog` models track pending syncs
-4. A blockchain task submits batched kill counts to the `GunniesKiller` smart contract
-5. Players receive a **Soulbound Token (SBT)** proving their kill history on-chain
-
-This creates a verifiable, tamper-proof record of player performance.
-
-### GCN Collectible Cards
-- **7 unique characters** (Veronica, Sunny, Dustin, Degen, Butterknife, Mint Condition, Twitch)
-- **3 rarity tiers**: Shard, Holo, Gold
-- Mint on Avalanche, craft higher-tier cards via the **GCNCraftingRouter**
-- Metadata stored on **Arweave** for permanent decentralization
-
----
-
-## 📂 Repository Structure
-
-```
-gunnies-avax/
-├── fe/              → Next.js frontend (website, wallet connection, NFT minting)
-├── be/              → Django backend (auth, payments, game data, on-chain sync)
-├── contracts/       → Solidity smart contracts (ERC-721, ERC-1155, SBTs, crafting)
-├── game-scripts/    → Blockchain utility scripts (kill sync, chain helpers)
-└── README.md        → You are here
-```
-
-See each subfolder's `README.md` for detailed setup instructions.
-
----
-
-## ⛓️ Avalanche Integration
+## ⛓️ Avalanche Integration Details
 
 ### Why Avalanche?
-- **Sub-second finality** — lootbox opens feel instant
-- **Low gas fees** — affordable for high-frequency kill-count syncs
-- **C-Chain EVM compatibility** — straightforward migration of existing Solidity contracts
+- **Sub-second finality** — lootbox opens feel instant to the player
+- **Low gas fees** — affordable for high-frequency kill-count syncs (every 15 min)
+- **C-Chain EVM compatibility** — same Solidity contracts, no rewrite needed
 - **Subnet / L1 potential** — future dedicated Gunnies chain for zero-gas gameplay
 
-### Chain Details
+### Chain Configuration
 
 | | Mainnet | Fuji Testnet |
 |---|---|---|
@@ -139,77 +182,32 @@ See each subfolder's `README.md` for detailed setup instructions.
 | **Explorer** | [snowtrace.io](https://snowtrace.io) | [testnet.snowtrace.io](https://testnet.snowtrace.io) |
 | **Currency** | AVAX | AVAX |
 
-### Contract Addresses (TBD)
-
-All contracts will be redeployed on Avalanche C-Chain. Current addresses are placeholders:
-
-| Contract | Address | Description |
-|---|---|---|
-| GCN721Main | TBD | Main NFT collection (ERC-721) |
-| GCNShards | TBD | Card shards (ERC-1155) |
-| GCNCraftingRouter | TBD | Craft higher-tier cards |
-| GunniesKiller | TBD | Kill-count SBT |
-| GunniesSBT | TBD | Soulbound achievement tokens |
-| Karrot | TBD | ERC-20 reward token |
-| Coin | TBD | In-game currency bridge |
-
 ---
 
 ## 🗺️ Roadmap
 
-### 🔴 AVAX-Exclusive Content
-
-These features are **only available on Avalanche** — they will never exist on any other chain.
-
-#### ❄️ Exclusive Hero Character — *"Avalanche"*
-A brand-new playable hero coming exclusively to the Avalanche ecosystem. This isn't a reskin — it's a fully original character with unique abilities, voice lines, and lore tied to Avalanche:
-
-- **Custom 3D model & animations** designed from scratch for the AVAX launch
-- **Signature ability: "Snowslide"** — an area-of-effect freeze that slows all enemies in range
-- **Unlockable via on-chain quest**: players must complete a series of Avalanche-native missions (lootbox opens, kill milestones, crafting) to mint the hero as a Soulbound Token
-- **In-game cosmetics**: Avalanche-branded weapon skins, emotes, and kill effects that only this hero can equip
-- **Lore**: A rogue operative from the Avalanche subnet, drawn into the Gunnies arena by rumors of infinite respawns. Cold, calculating, and unstoppable once in motion.
-
-> *"Avalanche" will be the first character in Gunnies whose existence is permanently recorded on-chain. Own the hero. Prove you earned it. No marketplace shortcuts — this one is soulbound.*
-
-#### 🎨 Exclusive PFP Special Trait Collection
-A limited-edition **PFP (profile picture) NFT collection** minted exclusively on Avalanche C-Chain, featuring traits that don't exist in any other Gunnies collection:
-
-- **Avalanche-exclusive trait category**: "Frost" traits — icy particle effects, glacial backgrounds, and crystalline accessories that are unique to this chain
-- **Dynamic metadata**: PFP traits evolve based on on-chain activity (kills, lootbox opens, crafting milestones) — the more you play on Avalanche, the rarer your PFP becomes
-- **7 base characters × exclusive Frost variants** = dozens of never-before-seen combinations
-- **Interoperable avatar**: usable as your in-game profile pic, Discord PFP, and across any Avalanche-compatible marketplace
-- **Tiered rarity**: Common → Uncommon → Rare → Legendary → **Mythic (1-of-1 per character)** — Mythic PFPs are generated from on-chain randomness using Avalanche VRF
-
-> *This collection is a love letter to the Avalanche community. Every trait, every combination, every Mythic 1-of-1 can only ever exist on AVAX. Collectors on other chains will never have access to these.*
-
----
-
 ### Phase 1 — Avalanche C-Chain (Current)
 - [x] Port frontend to Avalanche C-Chain
+- [x] Build AVAX-exclusive quests page (`/avax`)
 - [x] Update backend chain configuration
-- [ ] Deploy all contracts to Fuji testnet
-- [ ] QA lootbox flow on testnet
-- [ ] Deploy to Avalanche mainnet
-- [ ] Audit smart contracts
-- [ ] **Launch "Avalanche" exclusive hero unlock quest**
-- [ ] **Deploy PFP Special Trait Collection contract**
+- [x] Deploy KhaosReward, GunniesKiller, Kaboom_Pass, Kaboom_Distributor
+- [x] Verify all contracts on Snowtrace
+- [ ] QA full lootbox + Kaboom Pass flow on mainnet
+- [ ] Deploy remaining contracts (GCN NFTs, crafting, tokens)
+- [ ] Launch "Avalanche" exclusive hero unlock quest
+- [ ] Deploy PFP Special Trait Collection
 
-### Phase 2 — AVAX-Exclusive Drops & L1 Migration
-- [ ] Mint window for Exclusive PFP Special Trait Collection
-- [ ] Activate dynamic PFP trait evolution engine
-- [ ] "Avalanche" hero playable in-game with Soulbound unlock
-- [ ] Evaluate Avalanche L1 (formerly Subnet) for dedicated Gunnies chain
-- [ ] Design tokenomics for L1 gas token
-- [ ] Implement cross-chain bridge (C-Chain ↔ Gunnies L1)
-- [ ] Zero-gas gameplay for kill-count syncs
+### Phase 2 — AVAX-Exclusive Content
+- [ ] **Exclusive hero: "Avalanche"** — original character with Soulbound unlock quest
+- [ ] **Frost PFP trait collection** — dynamic traits that evolve with on-chain activity
+- [ ] Mythic 1-of-1 PFP generation via Avalanche VRF
+- [ ] Tournament system with AVAX prize pools
 
-### Phase 3 — Ecosystem Expansion
-- [ ] Marketplace for GCN card trading on Avalanche
-- [ ] Tournament system with on-chain prize pools (AVAX-exclusive hero tournaments)
-- [ ] Cross-game NFT interoperability via Avalanche standards
-- [ ] DAO governance for game balance decisions
-- [ ] Mythic 1-of-1 PFP auction events
+### Phase 3 — Avalanche L1 Migration
+- [ ] Evaluate dedicated Gunnies L1 for zero-gas gameplay
+- [ ] Cross-chain bridge (C-Chain to Gunnies L1)
+- [ ] DAO governance for game balance
+- [ ] Cross-game NFT interoperability
 
 ---
 
@@ -235,15 +233,16 @@ cd be && pip install -r requirements.txt && python manage.py runserver
 cd contracts && forge build
 ```
 
-See individual README files in each directory for full setup instructions.
+See individual `README.md` files in `/fe`, `/be`, and `/contracts` for detailed setup.
 
 ---
 
 ## 🔗 Links
 
-- **AVAX Game Program**: [build.avax.network/build-games](https://build.avax.network/build-games)
+- **AVAX Build Games**: [build.avax.network/build-games](https://build.avax.network/build-games)
 - **Avalanche Docs**: [docs.avax.network](https://docs.avax.network)
 - **Gunnies Website**: [gunnies.io](https://gunnies.io)
+- **Gunnies AVAX Page**: [gunnies.io/avax](https://gunnies.io/avax)
 - **Discord**: [discord.com/invite/pentagongamesxp](https://discord.com/invite/pentagongamesxp)
 - **Twitter/X**: [@GunniesXP](https://x.com/GunniesXP)
 

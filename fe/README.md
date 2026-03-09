@@ -56,7 +56,16 @@ Uses RainbowKit with Avalanche C-Chain and Fuji Testnet configured. See `src/app
 
 ## Contract Interaction
 
-All contract addresses are defined in `src/app/constants/address.ts`. Currently set to **TBD** — will be updated once contracts are deployed on Avalanche.
+All contract addresses are defined in `src/app/constants/address.ts`:
+
+| Contract | Address | Used For |
+|---|---|---|
+| KhaosReward | `0x9FF2D54510AB66Dd82634eAA1Afa1e57C3E1882C` | `useClaimAvax` — lootbox opening |
+| GunniesKiller | `0x45eFd10b36CC2fAC20852e47371BeBb36FB47C1c` | `useKillBalance` — kill count display |
+| Kaboom_Pass | `0x8c5D7BC84d0ab7cc7e32A9848804824d079f2C0f` | Ownership check for premium chests |
+| Kaboom_Distributor | `0x051654bF2Ba4eB8bf866e1196B4a23970d97Db15` | `useMintAvax` — pass purchase with AVAX |
+
+All contracts are verified on [Snowtrace](https://snowtrace.io).
 
 ## Environment Variables
 
