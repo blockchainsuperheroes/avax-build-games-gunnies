@@ -187,28 +187,30 @@ Players can buy a **Kaboom Pass NFT** with AVAX:
 
 ## 🗺️ Roadmap
 
-### Phase 1 — Avalanche C-Chain (Current)
+### Phase 1 — Live on Avalanche C-Chain ✅
 - [x] Port frontend to Avalanche C-Chain
 - [x] Build AVAX-exclusive quests page (`/avax`)
-- [x] Update backend chain configuration
+- [x] Update backend chain configuration for Avalanche
 - [x] Deploy KhaosReward, GunniesKiller, Kaboom_Pass, Kaboom_Distributor to mainnet
 - [x] Verify all contracts on Snowtrace
-- [ ] QA full lootbox + Kaboom Pass flow
-- [ ] Deploy remaining contracts (GCN NFTs, crafting, tokens)
-- [ ] Launch "Avalanche" exclusive hero unlock quest
-- [ ] Deploy PFP Special Trait Collection
+- [ ] QA full lootbox + Kaboom Pass flow on mainnet
+- [ ] Engage with Avalanche community and ecosystem partners
 
-### Phase 2 — AVAX-Exclusive Content
-- [ ] **Exclusive hero: "Avalanche"** — original character with Soulbound unlock quest
-- [ ] **Frost PFP trait collection** — dynamic traits that evolve with on-chain activity
-- [ ] Mythic 1-of-1 PFP generation via Avalanche VRF
-- [ ] Tournament system with AVAX prize pools
+### Phase 2 — Avalanche-Native Growth
+- [ ] Deploy remaining game contracts (GCN NFTs, crafting system, reward tokens)
+- [ ] Launch **"Avalanche" exclusive hero** — original character with Soulbound unlock quest, only earnable on AVAX
+- [ ] **Frost PFP trait collection** — AVAX-exclusive dynamic traits that evolve with on-chain activity
+- [ ] Mythic 1-of-1 PFP generation using Avalanche VRF
+- [ ] AVAX-exclusive tournament system with on-chain prize pools
+- [ ] Avalanche marketplace integration for GCN card trading
 
-### Phase 3 — Avalanche L1 Migration
-- [ ] Evaluate dedicated Gunnies L1 for zero-gas gameplay
-- [ ] Cross-chain bridge (C-Chain to Gunnies L1)
-- [ ] DAO governance for game balance
-- [ ] Cross-game NFT interoperability
+### Phase 3 — Dedicated Avalanche L1
+- [ ] Launch Gunnies as a dedicated Avalanche L1 (formerly Subnet) for zero-gas gameplay
+- [ ] Custom L1 gas token with AVAX-aligned tokenomics
+- [ ] Cross-chain bridge (C-Chain ↔ Gunnies L1) for seamless asset movement
+- [ ] All in-game transactions (kills, loot, crafting) fully on-chain with zero gas fees
+- [ ] DAO governance for game balance and community-driven development
+- [ ] Cross-game NFT interoperability within the Avalanche ecosystem
 
 ---
 
