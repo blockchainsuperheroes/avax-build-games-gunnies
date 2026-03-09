@@ -10,9 +10,15 @@ import {
 
 interface RemainingChests {
   [USER_TYPES.NORMAL_USER]: {
+    [REMAINING_CHESTS.SKALE]: number;
+    [REMAINING_CHESTS.CORE]: number;
+    [REMAINING_CHESTS.PENTAGON]: number;
     [REMAINING_CHESTS.AVAX]: number;
   };
   [USER_TYPES.PREMIUM_USER]: {
+    [REMAINING_CHESTS.SKALE]: number;
+    [REMAINING_CHESTS.CORE]: number;
+    [REMAINING_CHESTS.PENTAGON]: number;
     [REMAINING_CHESTS.AVAX]: number;
   };
 }
@@ -32,18 +38,31 @@ export const useHasPremiumUserChests = (): boolean => {
   return !!premiumChests && typeof premiumChests === 'object';
 };
 
-export const useHasAvaxPremiumUserChests = (): boolean => {
+export const useHasSkalePremiumUserChests = (): boolean => {
   const rewards = useStore((state: { rewards: any }) => state.rewards);
-  const avaxPremiumChests =
-    rewards?.remaining_chests?.[USER_TYPES.PREMIUM_USER]?.[REMAINING_CHESTS.AVAX];
-  return typeof avaxPremiumChests === 'number';
+  const skalePremiumChests =
+    rewards?.remaining_chests?.[USER_TYPES.PREMIUM_USER]?.[REMAINING_CHESTS.SKALE];
+  return typeof skalePremiumChests === 'number';
 };
 
-export const useHasAvaxUserChests = (): boolean => {
+export const useHasCorePremiumUserChests = (): boolean => {
   const rewards = useStore((state: { rewards: any }) => state.rewards);
-  const avaxChests =
-    rewards?.remaining_chests?.[USER_TYPES.NORMAL_USER]?.[REMAINING_CHESTS.AVAX];
-  return typeof avaxChests === 'number';
+  const corePremiumChests =
+    rewards?.remaining_chests?.[USER_TYPES.PREMIUM_USER]?.[REMAINING_CHESTS.CORE];
+  return typeof corePremiumChests === 'number';
+};
+
+export const useHasPentagonPremiumUserChests = (): boolean => {
+  const rewards = useStore((state: { rewards: any }) => state.rewards);
+  const pentagonPremiumChests =
+    rewards?.remaining_chests?.[USER_TYPES.PREMIUM_USER]?.[REMAINING_CHESTS.PENTAGON];
+  return typeof pentagonPremiumChests === 'number';
+};
+
+export const useHasPentagonUserChests = (): boolean => {
+  const rewards = useStore((state: { rewards: any }) => state.rewards);
+  const pentagonChests = rewards?.remaining_chests?.[USER_TYPES.NORMAL_USER]?.[REMAINING_CHESTS.PENTAGON];
+  return typeof pentagonChests === 'number';
 };
 
 export const useChestCount = ({
@@ -70,4 +89,11 @@ export const useChestCount = ({
     claimed,
     remaining,
   };
+};
+
+export const useHasAvaxPremiumUserChests = (): boolean => {
+  const rewards = useStore((state: { rewards: any }) => state.rewards);
+  const avaxPremiumChests =
+    rewards?.remaining_chests?.['premium_user']?.['remaining_chest_today_avax'];
+  return typeof avaxPremiumChests === 'number';
 };

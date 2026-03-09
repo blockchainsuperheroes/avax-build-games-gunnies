@@ -1,17 +1,21 @@
 'use client';
 
 import { http } from 'viem';
-import { avalanche, avalancheFuji } from 'viem/chains';
 import { WagmiProvider } from 'wagmi';
+import { skaleNebula, coreDao, mainnet } from 'wagmi/chains';
 import { getDefaultConfig } from '@rainbow-me/rainbowkit';
+import { PentagonChain, AvalancheMainnet } from '@/app/constants/chains';
 
 export const config = getDefaultConfig({
-  appName: 'Gunnies - Built on Avalanche',
+  appName: 'Gunnies',
   projectId: process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID || '',
-  chains: [avalanche, avalancheFuji],
+  chains: [skaleNebula, coreDao, mainnet, PentagonChain, AvalancheMainnet],
   transports: {
-    [avalanche.id]: http(),
-    [avalancheFuji.id]: http(),
+    [skaleNebula.id]: http(),
+    [coreDao.id]: http(),
+    [mainnet.id]: http(),
+    [PentagonChain.id]: http(),
+    [AvalancheMainnet.id]: http(),
   },
   ssr: true,
 });

@@ -3,6 +3,9 @@ export const QUESTS_CONFIG = {
 };
 
 export const CHAIN_CHEST = {
+  SKALE: 'skale',
+  CORE: 'core',
+  PENTAGON: 'pentagon',
   AVAX: 'avax',
 } as const;
 
@@ -12,10 +15,19 @@ export const USER_TYPES = {
 } as const;
 
 export const REMAINING_CHESTS = {
+  CORE: 'remaining_chest_today_core',
+  SKALE: 'remaining_chest_today_skale',
+  PENTAGON: 'remaining_chest_today_pen',
   AVAX: 'remaining_chest_today_avax',
 } as const;
 
 export const CHEST_TYPES = {
+  SKALE_NORMAL: 'skale_normal',
+  SKALE_PREMIUM: 'skale_premium',
+  CORE_NORMAL: 'core_normal',
+  CORE_PREMIUM: 'core_premium',
+  PENTAGON_NORMAL: 'pen_normal',
+  PENTAGON_PREMIUM: 'pen_premium',
   AVAX_NORMAL: 'avax_normal',
   AVAX_PREMIUM: 'avax_premium',
 } as const;
