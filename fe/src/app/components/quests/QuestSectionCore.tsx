@@ -2,12 +2,13 @@
 
 import { ChestUserType, REMAINING_CHESTS } from '@/app/constants/questsConfig';
 import QuestsCardClaimed from './QuestsCardClaimed';
-import QuestsCardAvalancheToClaim from './QuestsCardAvalancheToClaim';
+import QuestsCardAvaxToClaim from './QuestsCardAvaxToClaim';
 import { useChestCount } from '@/hooks/useChestCount';
 import { useState } from 'react';
 import QuestModal from './QuestModal';
 
-function QuestSectionAvalanche({ userType }: { userType: ChestUserType }) {
+// Legacy component name kept for compatibility - now uses AVAX
+function QuestSectionCore({ userType }: { userType: ChestUserType }) {
   const { claimed, remaining } = useChestCount({
     remainingChestType: REMAINING_CHESTS.AVAX,
     userType: userType,
@@ -32,7 +33,7 @@ function QuestSectionAvalanche({ userType }: { userType: ChestUserType }) {
         <QuestsCardClaimed key={`claimed_${index}`} />
       ))}
       {Array.from({ length: remaining }).map((_, index) => (
-        <QuestsCardAvalancheToClaim
+        <QuestsCardAvaxToClaim
           key={`AVAX_${index}`}
           questKey={`AVAX_${index}`}
           userType={userType}
@@ -43,4 +44,4 @@ function QuestSectionAvalanche({ userType }: { userType: ChestUserType }) {
   );
 }
 
-export default QuestSectionAvalanche;
+export default QuestSectionCore;

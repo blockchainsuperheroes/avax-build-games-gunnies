@@ -1,0 +1,9 @@
+**/.DS_Store
+instance/
+*.log
+*.pot
+*.pyc
+__pycache__/
+venv/
+.env
+.ruff_cache/

@@ -2,8 +2,8 @@
 import Image from 'next/image';
 import { useSession } from 'next-auth/react';
 import { useAccount, useChainId, useSwitchChain } from 'wagmi';
-import useClaimAvalanche from '@/hooks/useClaimAvalanche';
-import { avalancheFuji } from 'viem/chains';
+import useClaimAvax from '@/hooks/useClaimAvax';
+import { avalanche } from 'viem/chains';
 import { toast } from 'react-toastify';
 import QuestModal from '@/app/components/quests/QuestModal';
 import { useEffect, useState } from 'react';
@@ -26,7 +26,7 @@ function QuestsCardAvalancheToClaim({
 }) {
   const { status: sessionStatus }: any = useSession();
   const { switchChainAsync } = useSwitchChain();
-  const { handleClaimReward, isChestLoading, isPending, isSuccess } = useClaimAvalanche({
+  const { handleClaimReward, isChestLoading, isPending, isSuccess } = useClaimAvax({
     key: questKey,
     chestType:
       userType === USER_TYPES.PREMIUM_USER ? CHEST_TYPES.AVAX_PREMIUM : CHEST_TYPES.AVAX_NORMAL,
@@ -58,8 +58,8 @@ function QuestsCardAvalancheToClaim({
           return;
         }
         setIsClaiming(true);
-        if (chainId !== avalancheFuji.id) {
-          await switchChainAsync({ chainId: avalancheFuji.id });
+        if (chainId !== avalanche.id) {
+          await switchChainAsync({ chainId: avalanche.id });
           await new Promise(resolve => setTimeout(resolve, 500));
         }
         await handleClaimReward();

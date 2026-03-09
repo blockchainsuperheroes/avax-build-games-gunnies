@@ -1,26 +1,32 @@
-// All contract addresses are TBD - to be redeployed on Avalanche C-Chain
-// Mainnet (43114) and Fuji Testnet (43113)
+// Avalanche C-Chain (43114) contract addresses
+// Deployed by Mohib
 
 export const ADDRESSES = {
   KHAO_REWARDS: {
-    AVAX: 'TBD', // To be deployed on Avalanche C-Chain
+    AVAX: '0x9FF2D54510AB66Dd82634eAA1Afa1e57C3E1882C',
   },
   KABOOM_DISTRIBUTOR: {
-    AVAX: 'TBD', // To be deployed on Avalanche C-Chain
+    AVAX: '0x051654bF2Ba4eB8bf866e1196B4a23970d97Db15',
+  },
+  KABOOM_PASS: {
+    AVAX: '0x8c5D7BC84d0ab7cc7e32A9848804824d079f2C0f',
+  },
+  GUNNIES_KILLER: {
+    AVAX: '0x45eFd10b36CC2fAC20852e47371BeBb36FB47C1c',
   },
   KABOOM_APPROVAL: {
-    AVAX: 'TBD', // To be deployed on Avalanche C-Chain
+    AVAX: '0x9FF2D54510AB66Dd82634eAA1Afa1e57C3E1882C',
   },
   GCNSHARDS: {
-    AVAX: 'TBD', // To be deployed on Avalanche C-Chain
+    AVAX: 'TBD',
   },
   GCNCRAFTINGROUTE: {
-    AVAX: 'TBD', // To be deployed on Avalanche C-Chain
+    AVAX: 'TBD',
   },
   GCN_CHARACTERS: {
-    AVAX: 'TBD', // To be deployed on Avalanche C-Chain
+    AVAX: 'TBD',
   },
   PFP_GUNNIES: {
-    AVAX: 'TBD', // To be deployed on Avalanche C-Chain
+    AVAX: 'TBD',
   },
 };

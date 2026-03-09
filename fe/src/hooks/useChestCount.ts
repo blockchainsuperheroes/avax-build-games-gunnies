@@ -11,12 +11,8 @@ import {
 interface RemainingChests {
   [USER_TYPES.NORMAL_USER]: {
     [REMAINING_CHESTS.AVAX]: number;
-    [REMAINING_CHESTS.AVAX]: number;
-    [REMAINING_CHESTS.AVAX]: number;
   };
   [USER_TYPES.PREMIUM_USER]: {
-    [REMAINING_CHESTS.AVAX]: number;
-    [REMAINING_CHESTS.AVAX]: number;
     [REMAINING_CHESTS.AVAX]: number;
   };
 }
@@ -36,31 +32,18 @@ export const useHasPremiumUserChests = (): boolean => {
   return !!premiumChests && typeof premiumChests === 'object';
 };
 
-export const useHasAvalanchePremiumUserChests = (): boolean => {
+export const useHasAvaxPremiumUserChests = (): boolean => {
   const rewards = useStore((state: { rewards: any }) => state.rewards);
   const avaxPremiumChests =
     rewards?.remaining_chests?.[USER_TYPES.PREMIUM_USER]?.[REMAINING_CHESTS.AVAX];
   return typeof avaxPremiumChests === 'number';
 };
 
-export const useHasAvalanchePremiumUserChests = (): boolean => {
+export const useHasAvaxUserChests = (): boolean => {
   const rewards = useStore((state: { rewards: any }) => state.rewards);
-  const corePremiumChests =
-    rewards?.remaining_chests?.[USER_TYPES.PREMIUM_USER]?.[REMAINING_CHESTS.AVAX];
-  return typeof corePremiumChests === 'number';
-};
-
-export const useHasAvalanchePremiumUserChests = (): boolean => {
-  const rewards = useStore((state: { rewards: any }) => state.rewards);
-  const avalanchePremiumChests =
-    rewards?.remaining_chests?.[USER_TYPES.PREMIUM_USER]?.[REMAINING_CHESTS.AVAX];
-  return typeof avalanchePremiumChests === 'number';
-};
-
-export const useHasAvalancheUserChests = (): boolean => {
-  const rewards = useStore((state: { rewards: any }) => state.rewards);
-  const avalancheChests = rewards?.remaining_chests?.[USER_TYPES.NORMAL_USER]?.[REMAINING_CHESTS.AVAX];
-  return typeof avalancheChests === 'number';
+  const avaxChests =
+    rewards?.remaining_chests?.[USER_TYPES.NORMAL_USER]?.[REMAINING_CHESTS.AVAX];
+  return typeof avaxChests === 'number';
 };
 
 export const useChestCount = ({

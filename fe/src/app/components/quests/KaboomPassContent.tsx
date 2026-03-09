@@ -3,19 +3,12 @@
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import dynamic from 'next/dynamic';
-import useMintAvalanche from '@/hooks/useMintAvalanche';
-import useMintAvalanche from '@/hooks/useMintAvalanche';
-import useMintAvalanche from '@/hooks/useMintAvalanche';
+import useMintAvax from '@/hooks/useMintAvax';
 import { useAccount, useSwitchChain } from 'wagmi';
 import { toast } from 'react-toastify';
-import { avalancheFuji, avalanche } from 'viem/chains';
-import { AvalancheMainnet } from '@/app/constants/chains';
+import { avalanche } from 'viem/chains';
 import { UserRejectedRequestError } from 'viem';
-import {
-  useHasAvalanchePremiumUserChests,
-  useHasAvalanchePremiumUserChests,
-  useHasAvalanchePremiumUserChests,
-} from '@/hooks/useChestCount';
+import { useHasAvaxPremiumUserChests } from '@/hooks/useChestCount';
 import { useGlobalContext } from '@/app/providers/GlobalProvider';
 
 const DynamicReactPlayer = dynamic(() => import('react-player'), { ssr: false });
@@ -28,7 +21,7 @@ export function KaboomPassNFTCard({ isMounted }: KaboomPassNFTCardProps) {
   return (
     <div className="flex-shrink-0 mx-auto lg:mx-0">
       <div className="relative w-[200px]">
-        <div className="absolute inset-0 bg-[#EF6C00] blur-2xl z-0" />
+        <div className="absolute inset-0 bg-[#E84142] blur-2xl z-0" />
         <div className="relative z-10 rounded-xl overflow-hidden">
           {isMounted && (
             <DynamicReactPlayer
@@ -63,7 +56,7 @@ const defaultBenefits: BenefitItem[] = [
     icon: '/images/lock.png',
     iconAlt: 'Chest',
     multiplier: 'x5',
-    title: 'Eligible For Prime Chests Rewards [CHAIN-SPECIFIC]',
+    title: 'Eligible For Prime Chests Rewards [AVAX]',
   },
   {
     icon: '/images/crown.png',
@@ -87,21 +80,13 @@ export function KaboomPassBenefits({ benefits = defaultBenefits }: KaboomPassBen
           <div className="flex-shrink-0 w-[70px] h-[70px] flex items-center justify-center rounded-lg absolute top-1/2 left-6 md:left-0 transform -translate-x-1/2 -translate-y-1/2">
             <Image src={benefit.icon} alt={benefit.iconAlt} width={70} height={70} />
           </div>
-          <div className="flex items-center gap-3 md:gap-4 w-[80dvw] md:w-[380px] bg-[#1CBBBC] rounded-lg pl-16 md:pl-12 pr-4 py-2 border border-white">
+          <div className="flex items-center gap-3 md:gap-4 w-[80dvw] md:w-[380px] bg-[#E84142] rounded-lg pl-16 md:pl-12 pr-4 py-2 border border-white">
             <span className="text-white text-2xl md:text-4xl font-chakra font-bold w-[30px] text-center">
               {benefit.multiplier}
             </span>
             <div className="flex-1">
               <p className="text-white text-xs md:text-sm font-chakra font-bold uppercase leading-tight">
-                {benefit.title.split('[').map((part, i) => {
-                  if (i === 0) return part;
-                  return (
-                    <React.Fragment key={i}>
-                      <br />
-                      {'[' + part}
-                    </React.Fragment>
-                  );
-                })}
+                {benefit.title}
               </p>
             </div>
           </div>
@@ -130,7 +115,7 @@ interface KaboomPassBuyButtonsProps {
 
 export function KaboomPassBuyButtons({ buttons }: KaboomPassBuyButtonsProps) {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 max-w-[1100px] mx-auto mb-8 md:mb-12">
+    <div className="flex justify-center gap-4 md:gap-6 max-w-[600px] mx-auto mb-8 md:mb-12">
       {buttons.map((button, index) => (
         <button
           key={index}
@@ -140,7 +125,7 @@ export function KaboomPassBuyButtons({ buttons }: KaboomPassBuyButtonsProps) {
             button.isEquipped
               ? 'bg-[#272727] border border-white cursor-not-allowed'
               : 'bg-transparent border border-white hover:bg-white/10'
-          } rounded-[20px] py-3 md:py-4 px-4 md:px-8 flex flex-row md:flex-col items-center justify-between md:justify-center gap-2 md:gap-3 transition-colors disabled:cursor-not-allowed`}
+          } rounded-[20px] py-3 md:py-4 px-4 md:px-8 flex flex-row md:flex-col items-center justify-between md:justify-center gap-2 md:gap-3 transition-colors disabled:cursor-not-allowed w-full`}
         >
           <Image
             src={button.logo}
@@ -159,7 +144,7 @@ export function KaboomPassBuyButtons({ buttons }: KaboomPassBuyButtonsProps) {
                 alt="checked mark"
                 width={30}
                 height={30}
-                className='md:w-[30px] md:h-[30px] w-[26px] h-[26px]'
+                className="md:w-[30px] md:h-[30px] w-[26px] h-[26px]"
               />
             </div>
           ) : (
@@ -197,11 +182,9 @@ export function KaboomPassMainContent({
   );
 }
 
-// Complete component with all logic included
+// Complete component with all logic included - AVAX only
 export function KaboomPassContentWithLogic({ isHideButton }: { isHideButton?: boolean }) {
-  const { mint: mintAvalanche, isLoading: isLoadingAvalanche } = useMintAvalanche();
-  const { mint: mintAvalanche, isLoading: isLoadingAvalanche } = useMintAvalanche();
-  const { mint: mintAvalanche, isLoading: isLoadingAvalanche } = useMintAvalanche();
+  const { mint: mintAvax, isLoading: isLoadingAvax } = useMintAvax();
   const { isConnected } = useAccount();
   const { switchChainAsync } = useSwitchChain();
   const { showWalletDetectionModal } = useGlobalContext();
@@ -211,9 +194,7 @@ export function KaboomPassContentWithLogic({ isHideButton }: { isHideButton?: bo
     setIsMounted(true);
   }, []);
 
-  const avaxPremiumUserChests = useHasAvalanchePremiumUserChests();
-  const corePremiumUserChests = useHasAvalanchePremiumUserChests();
-  const avalanchePremiumUserChests = useHasAvalanchePremiumUserChests();
+  const avaxPremiumUserChests = useHasAvaxPremiumUserChests();
 
   const handleMint = async (chainId: number) => {
     try {
@@ -224,21 +205,14 @@ export function KaboomPassContentWithLogic({ isHideButton }: { isHideButton?: bo
         return;
       }
 
-      const result = await switchChainAsync({ chainId });
+      await switchChainAsync({ chainId });
 
-      if (isLoadingAvalanche || isLoadingAvalanche || isLoadingAvalanche) {
+      if (isLoadingAvax) {
         return;
       }
 
       await new Promise(resolve => setTimeout(resolve, 500));
-
-      if (result.id === avalancheFuji.id) {
-        await mintAvalanche(chainId);
-      } else if (result.id === AvalancheMainnet.id) {
-        await mintAvalanche(chainId);
-      } else {
-        await mintAvalanche(chainId);
-      }
+      await mintAvax(chainId);
     } catch (error: any) {
       if (error instanceof UserRejectedRequestError) {
         toast.warn('Transaction cancelled');
@@ -262,36 +236,12 @@ export function KaboomPassContentWithLogic({ isHideButton }: { isHideButton?: bo
           logoAlt: 'Avalanche',
           logoWidth: 131,
           logoHeight: 33,
-          label: 'Buy Avalanche Kaboom Pass',
+          label: 'Buy AVAX Kaboom Pass',
           onClick: () => handleMint(avalanche.id),
-          isLoading: isLoadingAvalanche,
+          isLoading: isLoadingAvax,
           isEquipped: avaxPremiumUserChests,
           loadingText: 'Minting...',
           className: 'md:w-[131px] md:h-[33px] w-[63px] h-[16px]',
-        },
-        {
-          logo: '/images/quests/core-logo.png',
-          logoAlt: 'Avalanche',
-          logoWidth: 108,
-          logoHeight: 36,
-          label: 'Buy Avalanche Kaboom Pass',
-          onClick: () => handleMint(avalancheFuji.id),
-          isLoading: isLoadingAvalanche,
-          isEquipped: corePremiumUserChests,
-          loadingText: 'Minting...',
-          className: 'md:w-[108px] md:h-[36px] w-[60px] h-[20px]',
-        },
-        {
-          logo: '/images/quests/pen-chain.png',
-          logoAlt: 'Avalanche',
-          logoWidth: 161,
-          logoHeight: 41,
-          label: 'Buy Avalanche Kaboom Pass',
-          onClick: () => handleMint(AvalancheMainnet.id),
-          isLoading: isLoadingAvalanche,
-          isEquipped: avalanchePremiumUserChests,
-          loadingText: 'Minting...',
-          className: 'md:w-[161px] md:h-[41px] w-[66px] h-[18px]',
         },
       ]}
     />
