@@ -91,6 +91,8 @@ Game server reports kills
 | **Explorer** | [snowtrace.io](https://snowtrace.io) |
 | **Native Token** | AVAX |
 
+> Fuji Testnet (43113) used for internal QA before mainnet deploys.
+
 ## Compile & Deploy
 
 ### Using Foundry
@@ -103,7 +105,7 @@ foundryup
 # Compile
 forge build
 
-# Deploy to Avalanche Mainnet
+# Deploy to Avalanche C-Chain
 forge create --rpc-url https://api.avax.network/ext/bc/C/rpc \
   --private-key $PRIVATE_KEY \
   src/KhaosRewards.sol:KhaosReward

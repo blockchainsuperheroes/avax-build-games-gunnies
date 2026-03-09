@@ -175,12 +175,14 @@ Players can buy a **Kaboom Pass NFT** with AVAX:
 
 ### Chain Configuration
 
-| | Mainnet | Fuji Testnet |
-|---|---|---|
-| **Chain ID** | 43114 | 43113 |
-| **RPC** | `https://api.avax.network/ext/bc/C/rpc` | `https://api.avax-test.network/ext/bc/C/rpc` |
-| **Explorer** | [snowtrace.io](https://snowtrace.io) | [testnet.snowtrace.io](https://testnet.snowtrace.io) |
-| **Currency** | AVAX | AVAX |
+| | Value |
+|---|---|
+| **Chain ID** | 43114 |
+| **RPC** | `https://api.avax.network/ext/bc/C/rpc` |
+| **Explorer** | [snowtrace.io](https://snowtrace.io) |
+| **Currency** | AVAX |
+
+> Fuji Testnet (43113) used for internal QA before mainnet deploys.
 
 ---
 
@@ -190,9 +192,9 @@ Players can buy a **Kaboom Pass NFT** with AVAX:
 - [x] Port frontend to Avalanche C-Chain
 - [x] Build AVAX-exclusive quests page (`/avax`)
 - [x] Update backend chain configuration
-- [x] Deploy KhaosReward, GunniesKiller, Kaboom_Pass, Kaboom_Distributor
+- [x] Deploy KhaosReward, GunniesKiller, Kaboom_Pass, Kaboom_Distributor to mainnet
 - [x] Verify all contracts on Snowtrace
-- [ ] QA full lootbox + Kaboom Pass flow on mainnet
+- [ ] QA full lootbox + Kaboom Pass flow
 - [ ] Deploy remaining contracts (GCN NFTs, crafting, tokens)
 - [ ] Launch "Avalanche" exclusive hero unlock quest
 - [ ] Deploy PFP Special Trait Collection
