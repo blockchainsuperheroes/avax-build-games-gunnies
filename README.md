@@ -111,7 +111,7 @@ Players can buy a **Kaboom Pass NFT** with AVAX:
 ```
 ┌─────────────────────────────────────────────────────────────┐
 │                      GAME CLIENT                            │
-│              (Unreal Engine 5 — Steam / Epic)               │
+│                (Unity — Steam / Epic)                        │
 │                                                             │
 │   ┌──────────┐  ┌──────────┐  ┌────────────────────────┐   │
 │   │ Gameplay │  │ Lootbox  │  │ Kill-count tracking    │   │
@@ -170,7 +170,7 @@ Players can buy a **Kaboom Pass NFT** with AVAX:
 - **Sub-second finality** — lootbox opens feel instant to the player
 - **Low gas fees** — affordable for high-frequency kill-count syncs (every 15 min)
 - **C-Chain EVM compatibility** — same Solidity contracts, no rewrite needed
-- **Subnet / L1 potential** — future dedicated Gunnies chain for zero-gas gameplay
+- **L1 potential** — future dedicated Gunnies chain for zero-gas gameplay
 
 ### Chain Configuration
 
@@ -203,12 +203,8 @@ Players can buy a **Kaboom Pass NFT** with AVAX:
 - [ ] Mythic 1-of-1 PFP generation using Avalanche VRF
 - [ ] AVAX-exclusive tournament system with on-chain prize pools
 - [ ] Avalanche marketplace integration for GCN card trading
-
-### Phase 3 — Dedicated Avalanche L1
-- [ ] Launch Gunnies as a dedicated Avalanche L1 (formerly Subnet) for zero-gas gameplay
-- [ ] Custom L1 gas token with AVAX-aligned tokenomics
+- [ ] Explore dedicated Avalanche L1 for zero-gas gameplay
 - [ ] Cross-chain bridge (C-Chain ↔ Gunnies L1) for seamless asset movement
-- [ ] All in-game transactions (kills, loot, crafting) fully on-chain with zero gas fees
 - [ ] DAO governance for game balance and community-driven development
 - [ ] Cross-game NFT interoperability within the Avalanche ecosystem
 
