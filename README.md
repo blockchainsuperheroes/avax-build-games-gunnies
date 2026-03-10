@@ -16,6 +16,16 @@
 
 ---
 
+## 🏆 Deliverables at a Glance
+
+| Deliverable | Link |
+|---|---|
+| **📂 Public GitHub** | [github.com/blockchainsuperheroes/avax-build-games-gunnies](https://github.com/blockchainsuperheroes/avax-build-games-gunnies) |
+| **🎮 Live MVP** | [gunnies.io/avax](https://gunnies.io/avax) |
+| **📜 Verified Smart Contracts** | [See all 4 contracts below ↓](#-deployed-contracts-avalanche-c-chain-mainnet) |
+
+---
+
 ## ✅ Deployed Contracts (Avalanche C-Chain Mainnet)
 
 All 4 contracts are **deployed and verified** on Snowtrace:
